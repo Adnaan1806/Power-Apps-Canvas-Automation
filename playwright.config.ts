@@ -12,6 +12,9 @@ export default defineConfig({
   retries: process.env.CI ? 1 : 0,
   reporter: [['html', { open: 'never' }], ['list']],
   use: {
+    // Headed locally so you can actually watch the browser; headless in CI
+    // where there's no display and nobody's watching anyway.
+    headless: !!process.env.CI,
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',

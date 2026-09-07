@@ -15,12 +15,15 @@ export abstract class BasePage {
     this.canvasFrame = page.frameLocator(CANVAS_FRAME_SELECTOR);
   }
 
+  // .first(): once you're past Home, the breadcrumb repeats "Home"/"Reports"
+  // as its own button with the same accessible name as the top nav bar's -
+  // the nav bar always renders first in the DOM, so .first() disambiguates.
   get homeNavButton(): Locator {
-    return this.canvasFrame.getByRole('button', { name: 'Home', exact: true });
+    return this.canvasFrame.getByRole('button', { name: 'Home', exact: true }).first();
   }
 
   get reportsNavButton(): Locator {
-    return this.canvasFrame.getByRole('button', { name: 'Reports', exact: true });
+    return this.canvasFrame.getByRole('button', { name: 'Reports', exact: true }).first();
   }
 
   get helpNavButton(): Locator {

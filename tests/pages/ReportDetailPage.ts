@@ -1,5 +1,6 @@
 import { Locator } from '@playwright/test';
 import { BasePage } from './BasePage';
+import { ReportsPage } from './ReportsPage';
 
 /**
  * The report form screen (internal Power Apps screen name "StatsV2") reached
@@ -46,9 +47,26 @@ export class ReportDetailPage extends BasePage {
 
   async waitForLoad(): Promise<void> {
     await this.formStatus.waitFor({ state: 'visible', timeout: 150_000 });
+    // The status text can render before the screen's action buttons finish
+    // wiring up; wait for Back too so a click right after waitForLoad()
+    // can't land during that gap and get silently swallowed by the app.
+    await this.backButton.waitFor({ state: 'visible', timeout: 15_000 });
   }
 
-  async goBack(): Promise<void> {
+  async goBack(): Promise<ReportsPage> {
+    const reportsPage = new ReportsPage(this.page);
     await this.backButton.click();
+
+    // Guards against the same kind of swallowed click: if "All Reports"
+    // hasn't shown up soon, the first click likely didn't register - retry
+    // once before letting it fail for real.
+    try {
+      await reportsPage.pageHeading.waitFor({ state: 'visible', timeout: 15_000 });
+    } catch {
+      await this.backButton.click();
+      await reportsPage.waitForLoad();
+    }
+
+    return reportsPage;
   }
 }
