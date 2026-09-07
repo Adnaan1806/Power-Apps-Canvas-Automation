@@ -1,6 +1,7 @@
 import { Locator } from '@playwright/test';
 import { BasePage } from './BasePage';
 import { ReportsPage } from './ReportsPage';
+import { GeneralSection } from './sections/GeneralSection';
 
 /**
  * The report form screen (internal Power Apps screen name "StatsV2") reached
@@ -43,6 +44,10 @@ export class ReportDetailPage extends BasePage {
   /** One of the numbered, collapsible form sections, e.g. "1. General". */
   sectionByName(name: string): Locator {
     return this.canvasFrame.getByText(name, { exact: true });
+  }
+
+  get generalSection(): GeneralSection {
+    return new GeneralSection(this.page);
   }
 
   async waitForLoad(): Promise<void> {
