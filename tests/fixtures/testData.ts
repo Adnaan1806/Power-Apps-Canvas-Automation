@@ -22,6 +22,23 @@ export const taxRevenueSectionTestData = {
   overLimitAttempt: '12345678901234567890', // 20 digits typed, to prove input stops at 14
 };
 
+export const bsoLegalOtherRevenueSectionTestData = {
+  // 5.5 BSO total = sum of 5.1-5.4. 5.6 and 5.7 are directly-entered
+  // fields (no sub-items feed them), and there is no overall grand total
+  // combining 5.5+5.6+5.7 - confirmed live.
+  bsoAccounting: '10',
+  payrollAndHr: '20',
+  globalCompliance: '30',
+  businessAdvisory: '40',
+  expectedBsoTotal: '100',
+  legalTotal: '50',
+  otherTotal: '60',
+  maxLengthValue: '12345678901234', // exactly 14 digits - this section's confirmed numeric field cap
+  overLimitAttempt: '12345678901234567890', // 20 digits typed, to prove input stops at 14
+  otherRevenueDescriptionMaxLength: 'A'.repeat(250), // 5.8's confirmed character cap
+  otherRevenueDescriptionOverLimitAttempt: 'A'.repeat(300), // typed, to prove input stops at 250
+};
+
 export const advisoryRevenueSectionTestData = {
   // 4.6 Deal advisory total = sum of 4.1-4.5.
   ma: '10',
