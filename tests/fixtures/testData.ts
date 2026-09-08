@@ -5,6 +5,23 @@ export const generalSectionTestData = {
   overLimitRevenueAttempt: '12345678901234567890', // 20 digits typed, to prove input stops at 16
 };
 
+export const taxRevenueSectionTestData = {
+  // 3.11 Total = sum of all ten fields (no exclusions, unlike section 2).
+  compliance: '10',
+  corporateInternationalTax: '20',
+  taxAssuranceAndRiskManagement: '30',
+  transferPricing: '40',
+  indirectTax: '50',
+  employerServices: '60',
+  privateClientsServices: '70',
+  maTaxServices: '80',
+  rdCreditsAndIncentives: '90',
+  otherTaxServices: '100',
+  expectedTotal: '550',
+  maxLengthValue: '12345678901234', // exactly 14 digits - this section's confirmed field cap
+  overLimitAttempt: '12345678901234567890', // 20 digits typed, to prove input stops at 14
+};
+
 export const auditAssuranceSectionTestData = {
   // 2.7 Total = relatedServiceEngagements + audits + reviews + otherAssuranceEngagements
   // (2.3 and 2.6 are excluded from the sum - confirmed live).
