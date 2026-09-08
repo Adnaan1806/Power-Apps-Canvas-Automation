@@ -3,6 +3,7 @@ import { APP_URL, AUTH_STATE_PATH } from '../../config/app.config';
 import { HomePage } from '../pages/HomePage';
 import { ReportDetailPage } from '../pages/ReportDetailPage';
 import { GeneralSection } from '../pages/sections/GeneralSection';
+import { AuditAssuranceSection } from '../pages/sections/AuditAssuranceSection';
 
 const REPORT_NAME = 'Austria 2026';
 const REPORT_DUE_DATE = '30 Jun 2025';
@@ -10,6 +11,7 @@ const REPORT_DUE_DATE = '30 Jun 2025';
 type WorkerFixtures = {
   reportDetail: ReportDetailPage;
   generalSection: GeneralSection;
+  auditAssuranceSection: AuditAssuranceSection;
 };
 
 /**
@@ -49,6 +51,14 @@ export const test = base.extend<{}, WorkerFixtures>({
     async ({ reportDetail }, use) => {
       await reportDetail.generalSection.expand();
       await use(reportDetail.generalSection);
+    },
+    { scope: 'worker' },
+  ],
+
+  auditAssuranceSection: [
+    async ({ reportDetail }, use) => {
+      await reportDetail.auditAssuranceSection.expand();
+      await use(reportDetail.auditAssuranceSection);
     },
     { scope: 'worker' },
   ],

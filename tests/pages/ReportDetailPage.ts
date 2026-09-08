@@ -2,6 +2,7 @@ import { Locator } from '@playwright/test';
 import { BasePage } from './BasePage';
 import { ReportsPage } from './ReportsPage';
 import { GeneralSection } from './sections/GeneralSection';
+import { AuditAssuranceSection } from './sections/AuditAssuranceSection';
 
 /**
  * The report form screen (internal Power Apps screen name "StatsV2") reached
@@ -48,6 +49,10 @@ export class ReportDetailPage extends BasePage {
 
   get generalSection(): GeneralSection {
     return new GeneralSection(this.page);
+  }
+
+  get auditAssuranceSection(): AuditAssuranceSection {
+    return new AuditAssuranceSection(this.page);
   }
 
   async waitForLoad(): Promise<void> {
