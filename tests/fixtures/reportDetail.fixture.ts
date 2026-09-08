@@ -5,6 +5,7 @@ import { ReportDetailPage } from '../pages/ReportDetailPage';
 import { GeneralSection } from '../pages/sections/GeneralSection';
 import { AuditAssuranceSection } from '../pages/sections/AuditAssuranceSection';
 import { TaxRevenueSection } from '../pages/sections/TaxRevenueSection';
+import { AdvisoryRevenueSection } from '../pages/sections/AdvisoryRevenueSection';
 
 const REPORT_NAME = 'Austria 2026';
 const REPORT_DUE_DATE = '30 Jun 2025';
@@ -14,6 +15,7 @@ type WorkerFixtures = {
   generalSection: GeneralSection;
   auditAssuranceSection: AuditAssuranceSection;
   taxRevenueSection: TaxRevenueSection;
+  advisoryRevenueSection: AdvisoryRevenueSection;
 };
 
 /**
@@ -69,6 +71,14 @@ export const test = base.extend<{}, WorkerFixtures>({
     async ({ reportDetail }, use) => {
       await reportDetail.taxRevenueSection.expand();
       await use(reportDetail.taxRevenueSection);
+    },
+    { scope: 'worker' },
+  ],
+
+  advisoryRevenueSection: [
+    async ({ reportDetail }, use) => {
+      await reportDetail.advisoryRevenueSection.expand();
+      await use(reportDetail.advisoryRevenueSection);
     },
     { scope: 'worker' },
   ],

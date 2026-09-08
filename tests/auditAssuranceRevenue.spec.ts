@@ -72,6 +72,15 @@ test.describe('BFR Canvas App - Report Detail - Audit and Assurance Revenue Sect
   test('saving with active validation errors marks the section "Validation error"', async ({
     auditAssuranceSection,
   }, testInfo) => {
+    // Confirmed live: Power Apps only enables Save when a field's typed
+    // value actually differs from what's currently persisted - retyping an
+    // unchanged value leaves Save disabled. Nudging 2.3 to a different but
+    // still-invalid value guarantees Save is enabled on a rerun, even if
+    // 2.3/2.6 already hold these exact values from a previous run.
+    await auditAssuranceSection.fillField(
+      auditAssuranceSection.pieAuditsInput,
+      String(Number(data.pieAuditsOverLimit) + 1)
+    );
     await auditAssuranceSection.save();
 
     await expect(auditAssuranceSection.saveSuccessAlert).toHaveText('Form saved: Audit and assurance revenue');

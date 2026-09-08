@@ -22,6 +22,29 @@ export const taxRevenueSectionTestData = {
   overLimitAttempt: '12345678901234567890', // 20 digits typed, to prove input stops at 14
 };
 
+export const advisoryRevenueSectionTestData = {
+  // 4.6 Deal advisory total = sum of 4.1-4.5.
+  ma: '10',
+  transactionServices: '20',
+  valuations: '30',
+  restructuring: '40',
+  other: '50',
+  expectedDealAdvisoryTotal: '150',
+  // 4.14 Total = 4.6 (the subtotal above) + 4.7 through 4.12 (does not
+  // double-count 4.1-4.5 individually).
+  riskAdvisoryServices: '60',
+  digital: '70',
+  forensics: '80',
+  cybersecurity: '90',
+  managementConsulting: '100',
+  otherRevenue: '110',
+  expectedTotal: '660',
+  maxLengthValue: '12345678901234', // exactly 14 digits - this section's confirmed numeric field cap
+  overLimitAttempt: '12345678901234567890', // 20 digits typed, to prove input stops at 14
+  otherRevenueDescriptionMaxLength: 'A'.repeat(250), // 4.13's confirmed character cap
+  otherRevenueDescriptionOverLimitAttempt: 'A'.repeat(300), // typed, to prove input stops at 250
+};
+
 export const auditAssuranceSectionTestData = {
   // 2.7 Total = relatedServiceEngagements + audits + reviews + otherAssuranceEngagements
   // (2.3 and 2.6 are excluded from the sum - confirmed live).

@@ -4,6 +4,7 @@ import { ReportsPage } from './ReportsPage';
 import { GeneralSection } from './sections/GeneralSection';
 import { AuditAssuranceSection } from './sections/AuditAssuranceSection';
 import { TaxRevenueSection } from './sections/TaxRevenueSection';
+import { AdvisoryRevenueSection } from './sections/AdvisoryRevenueSection';
 
 /**
  * The report form screen (internal Power Apps screen name "StatsV2") reached
@@ -58,6 +59,10 @@ export class ReportDetailPage extends BasePage {
 
   get taxRevenueSection(): TaxRevenueSection {
     return new TaxRevenueSection(this.page);
+  }
+
+  get advisoryRevenueSection(): AdvisoryRevenueSection {
+    return new AdvisoryRevenueSection(this.page);
   }
 
   async waitForLoad(): Promise<void> {
