@@ -22,6 +22,29 @@ export const taxRevenueSectionTestData = {
   overLimitAttempt: '12345678901234567890', // 20 digits typed, to prove input stops at 14
 };
 
+export const sectorRevenueSectionTestData = {
+  // 6.16 Total = sum of all fifteen fields (no exclusions, same pattern as
+  // section 3's Tax total).
+  financialServices: '10',
+  privateEquity: '20',
+  naturalResources: '30',
+  realEstateConstruction: '40',
+  publicSector: '50',
+  technology: '60',
+  mediaAndEntertainment: '70',
+  telecommunications: '80',
+  consumerBusiness: '90',
+  notForProfit: '100',
+  manufacturing: '110',
+  professionalServices: '120',
+  transportAndLogistics: '130',
+  healthcare: '140',
+  other: '150',
+  expectedTotal: '1 200',
+  maxLengthValue: '12345678901234', // exactly 14 digits - this section's confirmed field cap
+  overLimitAttempt: '12345678901234567890', // 20 digits typed, to prove input stops at 14
+};
+
 export const bsoLegalOtherRevenueSectionTestData = {
   // 5.5 BSO total = sum of 5.1-5.4. 5.6 and 5.7 are directly-entered
   // fields (no sub-items feed them), and there is no overall grand total
