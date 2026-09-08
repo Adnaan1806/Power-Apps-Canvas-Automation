@@ -15,19 +15,27 @@ test.describe('BFR Canvas App - Report Detail - General Section', () => {
     await expect(generalSection.saveSuccessAlert).toHaveText('Form saved: General');
   });
 
-  test('removing a field value and saving updates the section status', async ({ generalSection }) => {
+  test('removing a field value and saving updates the section status', async ({ generalSection }, testInfo) => {
     await generalSection.clearTotalRevenue();
     await generalSection.save();
 
     await expect(generalSection.saveSuccessAlert).toHaveText('Form saved: General');
     await expect(generalSection.statusRow).toContainText('In progress');
+
+    const statusText = await generalSection.getStatusText();
+    console.log(`General section status after clearing Total Revenue Declared: "${statusText}"`);
+    testInfo.annotations.push({ type: 'Section status', description: statusText });
   });
 
-  test('filling the field back in and saving marks the section Completed', async ({ generalSection }) => {
+  test('filling the field back in and saving marks the section Completed', async ({ generalSection }, testInfo) => {
     await generalSection.fillTotalRevenue(generalSectionTestData.validRevenue);
     await generalSection.save();
 
     await expect(generalSection.saveSuccessAlert).toHaveText('Form saved: General');
     await expect(generalSection.statusRow).toContainText('Completed');
+
+    const statusText = await generalSection.getStatusText();
+    console.log(`General section status after refilling Total Revenue Declared: "${statusText}"`);
+    testInfo.annotations.push({ type: 'Section status', description: statusText });
   });
 });

@@ -39,6 +39,12 @@ export class GeneralSection extends BasePage {
     return this.canvasFrame.getByRole('button', { name: /^Reporting currency(\. Selected: .+)?$/ });
   }
 
+  /** Collapses the status row's whitespace-heavy textContent into a single readable line, e.g. "1. General Completed". */
+  async getStatusText(): Promise<string> {
+    const raw = await this.statusRow.textContent();
+    return (raw ?? '').replace(/\s+/g, ' ').trim();
+  }
+
   currencyOption(code: string): Locator {
     return this.canvasFrame.getByRole('option', { name: code, exact: true });
   }

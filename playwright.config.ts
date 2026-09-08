@@ -9,6 +9,11 @@ export default defineConfig({
   timeout: 150_000,
   expect: { timeout: 10_000 },
   fullyParallel: false,
+  // One worker for the whole suite: spec files reload the same real,
+  // mutating Dataverse-backed app, so running two files' browsers
+  // concurrently both slows page loads past the timeout and risks two
+  // workers touching the same report data at once.
+  workers: 1,
   retries: process.env.CI ? 1 : 0,
   reporter: [['html', { open: 'never' }], ['list']],
   use: {
