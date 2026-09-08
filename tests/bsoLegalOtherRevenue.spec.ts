@@ -22,8 +22,10 @@ test.describe('BFR Canvas App - Report Detail - BSO, Legal and Other Revenue Sec
       data.businessAdvisory
     );
 
-    const bsoTotal = await bsoLegalOtherRevenueSection.getBsoTotalValue();
-    expect(bsoTotal).toBe(data.expectedBsoTotal);
+    // toHaveValue auto-retries: the app's live recompute of 5.5 can lag
+    // briefly behind the last field's blur, so a one-shot inputValue()
+    // read risks capturing a stale total (confirmed live on a rerun).
+    await expect(bsoLegalOtherRevenueSection.bsoTotalInput).toHaveValue(data.expectedBsoTotal);
   });
 
   test('5.6 Legal total and 5.7 Other total are directly editable, not computed', async ({

@@ -16,8 +16,10 @@ test.describe('BFR Canvas App - Report Detail - Audit and Assurance Revenue Sect
       data.otherAssuranceEngagements
     );
 
-    const total = await auditAssuranceSection.getTotalValue();
-    expect(total).toBe(data.expectedTotal);
+    // toHaveValue auto-retries: the app's live recompute of 2.7 can lag
+    // briefly behind the last field's blur, so a one-shot inputValue()
+    // read risks capturing a stale total (confirmed live on a rerun).
+    await expect(auditAssuranceSection.totalInput).toHaveValue(data.expectedTotal);
   });
 
   test('numeric fields cap input at 14 digits', async ({ auditAssuranceSection }) => {

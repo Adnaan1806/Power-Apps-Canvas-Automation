@@ -5,10 +5,6 @@ import { BasePage } from '../BasePage';
  * Fields inside a report detail form's "1. General" section (Firm,
  * Reporting year, Reporting currency, Due date, Total revenue declared).
  * Reached via ReportDetailPage.generalSection after expanding the section.
- *
- * Locators here assume General is the only expanded section on the page -
- * other sections render their own identically-named "Save" button once
- * expanded, so this would need scoping if used alongside "Expand All".
  */
 export class GeneralSection extends BasePage {
   get header(): Locator {
@@ -57,8 +53,27 @@ export class GeneralSection extends BasePage {
     return this.canvasFrame.getByRole('button', { name: 'Clear value' });
   }
 
+  /**
+   * Scoped to this section's own component, not the whole page: confirmed
+   * live that once multiple sections are expanded at once (which happens
+   * across a full test run - nothing collapses a section once another
+   * file's tests have expanded it), each renders its own identically-named
+   * "Save" button, causing a strict-mode violation on an unscoped lookup.
+   *
+   * Two earlier attempts at scoping this were wrong and hung every save()
+   * call: `following-sibling` (the header and Save button aren't DOM
+   * siblings at all) and an `ancestor` search for a "container_msw6rx"
+   * class (that class is reused at many unrelated nesting depths, not
+   * one-per-section - the nearest match from the header was a near-empty
+   * wrapper containing no buttons). What actually works, confirmed live
+   * by tagging and cross-checking the resolved element: the `following::`
+   * XPath axis, which walks the whole document in rendering order rather
+   * than nesting - the first "Save"-labelled button after this section's
+   * header is reliably this section's own, since the next one belongs to
+   * the following section.
+   */
   get saveButton(): Locator {
-    return this.canvasFrame.getByRole('button', { name: 'Save', exact: true });
+    return this.header.locator('xpath=following::button[normalize-space(.)="Save"][1]');
   }
 
   /** Lives outside the canvas iframe, in the Power Apps player chrome. */

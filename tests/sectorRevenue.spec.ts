@@ -36,8 +36,10 @@ test.describe('BFR Canvas App - Report Detail - Sector Revenue Section', () => {
     await sectorRevenueSection.fillField(sectorRevenueSection.healthcareInput, data.healthcare);
     await sectorRevenueSection.fillField(sectorRevenueSection.otherInput, data.other);
 
-    const total = await sectorRevenueSection.getTotalValue();
-    expect(total).toBe(data.expectedTotal);
+    // toHaveValue auto-retries: the app's live recompute of 6.16 can lag
+    // briefly behind the last field's blur, so a one-shot inputValue()
+    // read risks capturing a stale total (confirmed live on a rerun).
+    await expect(sectorRevenueSection.totalInput).toHaveValue(data.expectedTotal);
   });
 
   test('numeric fields cap input at 14 digits', async ({ sectorRevenueSection }) => {

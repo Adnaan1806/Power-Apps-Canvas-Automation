@@ -14,8 +14,12 @@ test.describe('BFR Canvas App - Report Detail - Advisory Revenue Section', () =>
     await advisoryRevenueSection.fillField(advisoryRevenueSection.restructuringInput, data.restructuring);
     await advisoryRevenueSection.fillField(advisoryRevenueSection.otherInput, data.other);
 
-    const dealAdvisoryTotal = await advisoryRevenueSection.getDealAdvisoryTotalValue();
-    expect(dealAdvisoryTotal).toBe(data.expectedDealAdvisoryTotal);
+    // toHaveValue auto-retries: the app's live recompute of 4.6 can lag
+    // briefly behind the last field's blur, so a one-shot inputValue()
+    // read risks capturing a stale total (confirmed live on a rerun).
+    await expect(advisoryRevenueSection.dealAdvisoryTotalInput).toHaveValue(
+      data.expectedDealAdvisoryTotal
+    );
   });
 
   test('4.14 Total sums 4.6 plus 4.7 through 4.12', async ({ advisoryRevenueSection }) => {
@@ -32,8 +36,11 @@ test.describe('BFR Canvas App - Report Detail - Advisory Revenue Section', () =>
     );
     await advisoryRevenueSection.fillField(advisoryRevenueSection.otherRevenueInput, data.otherRevenue);
 
-    const total = await advisoryRevenueSection.getTotalValue();
-    expect(total).toBe(data.expectedTotal);
+    // toHaveValue auto-retries: the app's live recompute of 4.14 can lag
+    // briefly behind the last field's blur, so a one-shot inputValue()
+    // read risks capturing a stale total (confirmed live on a rerun -
+    // this exact test failed with a stale "661" before "660" landed).
+    await expect(advisoryRevenueSection.totalInput).toHaveValue(data.expectedTotal);
   });
 
   test('4.13 Other revenue description is optional for completeness', async ({

@@ -28,8 +28,10 @@ test.describe('BFR Canvas App - Report Detail - Tax Revenue Section', () => {
     );
     await taxRevenueSection.fillField(taxRevenueSection.otherTaxServicesInput, data.otherTaxServices);
 
-    const total = await taxRevenueSection.getTotalValue();
-    expect(total).toBe(data.expectedTotal);
+    // toHaveValue auto-retries: the app's live recompute of 3.11 can lag
+    // briefly behind the last field's blur, so a one-shot inputValue()
+    // read risks capturing a stale total (confirmed live on a rerun).
+    await expect(taxRevenueSection.totalInput).toHaveValue(data.expectedTotal);
   });
 
   test('numeric fields cap input at 14 digits', async ({ taxRevenueSection }) => {
