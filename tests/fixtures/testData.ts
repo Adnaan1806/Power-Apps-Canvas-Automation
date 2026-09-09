@@ -129,3 +129,25 @@ export const revenueSummarySectionTestData = {
   explanationMaxLength: 'A'.repeat(250), // 8.13's confirmed character cap, same pattern as 4.13/5.8
   explanationOverLimitAttempt: 'A'.repeat(300), // typed, to prove input stops at 250
 };
+
+export const hrPartnerDetailsSectionTestData = {
+  // Same order as HrPartnerDetailsSection.categoryPairs - each entry's
+  // `female` <= `partners` (valid), `femaleOverLimit` > `partners`
+  // (triggers that pair's own validation error, confirmed live for A&A,
+  // Tax and BSO, trusted for Advisory/Legal/Other given the identical
+  // structural pattern). Practical 6-digit values throughout, not tiny
+  // single-digit counts.
+  categories: [
+    { partners: '500000', female: '200000', femaleOverLimit: '600000' }, // A&A
+    { partners: '450000', female: '180000', femaleOverLimit: '460000' }, // Tax
+    { partners: '400000', female: '150000', femaleOverLimit: '410000' }, // Advisory
+    { partners: '350000', female: '120000', femaleOverLimit: '360000' }, // BSO
+    { partners: '300000', female: '100000', femaleOverLimit: '310000' }, // Legal
+    { partners: '250000', female: '100000', femaleOverLimit: '260000' }, // Other
+  ],
+  otherPartnersExplanation: 'Other partners include two non-equity partners promoted mid-year.',
+  maxLengthValue: '123456789012', // exactly 12 digits - this field's HTML maxlength (typed-input truncation stops here)
+  overLimitAttempt: '12345678901234567890', // 20 digits typed, to prove input stops at 12
+  explanationMaxLength: 'A'.repeat(250), // 9.13's confirmed character cap, same pattern as 4.13/5.8/8.13
+  explanationOverLimitAttempt: 'A'.repeat(300), // typed, to prove input stops at 250
+};
