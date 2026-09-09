@@ -115,7 +115,17 @@ export class ReportsPage extends BasePage {
         .first()
         .waitFor({ state: 'visible', timeout: 15_000 });
     } else {
-      await this.page.keyboard.press('Escape');
+      // Confirmed live: pressing Escape to close the dropdown isn't
+      // reliable against a slow-loading page - it depends on keyboard
+      // focus being correctly set inside the canvas iframe, which isn't
+      // guaranteed, and a lost Escape leaves the dropdown open, silently
+      // blocking every click after it (e.g. the search box) for the rest
+      // of the fixture's setup budget. Clicking the same toggle button
+      // that opened it is more robust, since it doesn't depend on focus at
+      // all - and waiting for the listbox to actually become hidden (an
+      // auto-retrying assertion) is more reliable than a one-shot check.
+      await this.statusFilterButton.click();
+      await this.canvasFrame.getByRole('listbox').waitFor({ state: 'hidden', timeout: 15_000 });
     }
   }
 

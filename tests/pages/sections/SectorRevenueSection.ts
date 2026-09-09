@@ -8,8 +8,15 @@ import { BasePage } from '../BasePage';
  *
  * Structurally identical to "3. Tax revenue" - fifteen plain numeric
  * fields plus a read-only auto-summed total, no conditional fields and no
- * cross-field validation rules. 6.16's accessible name ("SSRev") is
- * unique on the page, so no ambiguity workaround is needed here.
+ * cross-field validation rules.
+ *
+ * 6.16's accessible name ("SSRev") used to be unique on the page, but isn't
+ * any more: once the report is linked to a prior year, a "Previous year's
+ * values" reference block renders alongside this section too, and every
+ * field in it reuses this same generic name - confirmed live, a bare
+ * `getByRole('textbox', { name: 'SSRev' })` now matches over a dozen
+ * elements instead of one. Located structurally via its visible label
+ * instead, same technique as AuditAssuranceSection.fieldInput.
  */
 export class SectorRevenueSection extends BasePage {
   get header(): Locator {
@@ -83,7 +90,10 @@ export class SectorRevenueSection extends BasePage {
 
   /** Read-only, auto-computed as the sum of all fifteen fields above. */
   get totalInput(): Locator {
-    return this.canvasFrame.getByRole('textbox', { name: 'SSRev', exact: true });
+    return this.canvasFrame
+      .getByText('6.16 Total', { exact: true })
+      .locator('xpath=ancestor::*[contains(@class, "appmagic-typed-card")][1]')
+      .getByRole('textbox');
   }
 
   /**

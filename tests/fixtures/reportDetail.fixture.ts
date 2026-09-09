@@ -46,7 +46,6 @@ export const test = base.extend<{}, WorkerFixtures>({
       await homePage.waitForLoad();
 
       const reports = await homePage.openReports();
-      await reports.clearStatusFilter();
       await reports.searchFor(REPORT_NAME);
       const detail = await reports.openReportDetails(REPORT_NAME, { dueDate: REPORT_DUE_DATE });
 

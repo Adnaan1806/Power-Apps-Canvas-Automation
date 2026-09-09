@@ -70,19 +70,18 @@ test.describe('BFR Canvas App - Reports', () => {
     for (let i = 0; i < rowCount; i++) {
       await expect(rows.nth(i)).toContainText('Approved');
     }
-  });
 
-  // Leaves the Reports screen (into the detail screen), so it runs last -
-  // nothing after it needs a clean Reports state. Defensively clears the
-  // status filter first: it persists across screen navigation (unlike
-  // search, which resets), so a filter left active by the test above would
-  // otherwise silently narrow these results too - confirmed live: searching
-  // "Austria" while "Approved" was still selected dropped 10 matches down
-  // to 1.
+    // The status filter persists across screen navigation (unlike search,
+    // which resets) - confirmed live it's saved against the account, not
+    // just this page/session, so it would otherwise leak into every other
+    // spec file's own report lookup. Reset it here, since this test is the
+    // one that dirtied it - not every downstream consumer's job to guard
+    // against it defensively.
+    await reports.clearStatusFilter();
+  });
 
   test('opening a filtered report navigates to its detail screen', async ({ homePage }) => {
     const reports = await homePage.openReports();
-    await reports.clearStatusFilter();
     await reports.searchFor('Austria');
 
     const detail = await reports.openReportDetails('Austria 2026', { dueDate: '30 Jun 2025' });
