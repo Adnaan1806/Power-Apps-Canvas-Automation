@@ -101,3 +101,23 @@ export const auditAssuranceSectionTestData = {
   maxLengthValue: '12345678901234', // exactly 14 digits - this section's confirmed field cap
   overLimitAttempt: '12345678901234567890', // 20 digits typed, to prove input stops at 14
 };
+
+export const sustainabilityRevenueSectionTestData = {
+  // 7.1 must equal the sum of 7.2.1-7.2.6 when 7.2 = "Yes" (confirmed live:
+  // an exact-equality check, unlike section 2's ">" inequality rules).
+  sustainabilityStrategy: '100',
+  regulatoryReportingAdvisory: '200',
+  assurance: '300',
+  climateServices: '400',
+  sustainableFinance: '500',
+  advisoryOther: '600',
+  totalRevenue: '2100', // matches the sum of the six breakdown fields above
+  totalRevenueMismatched: '2200', // != the breakdown sum, triggers the 7.1 validation error
+  totalRevenueOnly: '5000', // used with 7.2 = "No", when no breakdown fields exist to sum against
+  // Confirmed live: unlike every other section's fields, 7.1 caps at 16
+  // digits (the same cap as General's top-level revenue field), while the
+  // 7.2.1-7.2.6 breakdown fields cap at 14 like every other section's fields.
+  totalRevenueMaxLengthValue: '1234567890123456', // exactly 16 digits - 7.1's confirmed cap
+  breakdownMaxLengthValue: '12345678901234', // exactly 14 digits - the 7.2.x fields' confirmed cap
+  overLimitAttempt: '12345678901234567890', // 20 digits typed, to prove input stops at the field's cap
+};
