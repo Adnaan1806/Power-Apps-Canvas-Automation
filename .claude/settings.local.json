@@ -10,7 +10,10 @@
       "mcp__plugin_playwright_playwright__browser_wait_for",
       "mcp__plugin_playwright_playwright__browser_find",
       "Bash(npx playwright *)",
-      "mcp__plugin_playwright_playwright__browser_press_key"
+      "mcp__plugin_playwright_playwright__browser_press_key",
+      "Bash(node -e \"console.log\\(require\\('@playwright/test'\\).chromium ? 'chromium export ok' : 'no'\\)\")",
+      "Bash(tee scratchpad-section8-run.log)",
+      "Bash(tee scratchpad-section8-testrun4.log)"
     ]
   }
 }

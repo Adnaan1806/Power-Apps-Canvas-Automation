@@ -121,3 +121,11 @@ export const sustainabilityRevenueSectionTestData = {
   breakdownMaxLengthValue: '12345678901234', // exactly 14 digits - the 7.2.x fields' confirmed cap
   overLimitAttempt: '12345678901234567890', // 20 digits typed, to prove input stops at the field's cap
 };
+
+export const revenueSummarySectionTestData = {
+  // 8.13 is the only editable field - the rest of the section is a
+  // read-only reconciliation/rollup view (see RevenueSummarySection).
+  explanationText: 'Revenue increased due to a large one-off engagement in the audit practice.',
+  explanationMaxLength: 'A'.repeat(250), // 8.13's confirmed character cap, same pattern as 4.13/5.8
+  explanationOverLimitAttempt: 'A'.repeat(300), // typed, to prove input stops at 250
+};
