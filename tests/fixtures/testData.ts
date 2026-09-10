@@ -151,3 +151,32 @@ export const hrPartnerDetailsSectionTestData = {
   explanationMaxLength: 'A'.repeat(250), // 9.13's confirmed character cap, same pattern as 4.13/5.8/8.13
   explanationOverLimitAttempt: 'A'.repeat(300), // typed, to prove input stops at 250
 };
+
+export const hrStaffDetailsSectionTestData = {
+  // 10.4 A&A prof staff total = sum of 10.1-10.3 (confirmed live), and
+  // 10.5 must not exceed that computed total.
+  aaSeniorManagers: '150000',
+  aaManagers: '120000',
+  aaAuditorsAnalysts: '100000',
+  expectedAaTotal: '370000',
+  aaFemale: '200000', // <= 370000
+  aaFemaleOverLimit: '400000', // > 370000, triggers 10.5's validation error
+  // Same order as HrStaffDetailsSection.simpleCategoryPairs - each entry's
+  // `female` <= `staff` (valid), `femaleOverLimit` > `staff` (triggers
+  // that pair's own validation error, confirmed live for Tax and
+  // Overhead/admin, trusted for Advisory/BSO/Legal/Other given the
+  // identical structural pattern).
+  categories: [
+    { staff: '450000', female: '180000', femaleOverLimit: '460000' }, // Tax
+    { staff: '400000', female: '150000', femaleOverLimit: '410000' }, // Advisory
+    { staff: '350000', female: '120000', femaleOverLimit: '360000' }, // BSO
+    { staff: '300000', female: '100000', femaleOverLimit: '310000' }, // Legal
+    { staff: '250000', female: '100000', femaleOverLimit: '260000' }, // Other
+    { staff: '200000', female: '80000', femaleOverLimit: '210000' }, // Overhead/admin
+  ],
+  otherProfStaffExplanation: 'Other prof staff includes three contract-to-hire analysts converted this year.',
+  maxLengthValue: '1234567890123', // exactly 13 digits - this section's HTML maxlength (typed-input truncation stops here)
+  overLimitAttempt: '12345678901234567890', // 20 digits typed, to prove input stops at 13
+  explanationMaxLength: 'A'.repeat(250), // 10.16's confirmed character cap, same pattern as 4.13/5.8/8.13/9.13
+  explanationOverLimitAttempt: 'A'.repeat(300), // typed, to prove input stops at 250
+};
