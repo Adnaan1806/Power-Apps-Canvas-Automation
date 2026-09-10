@@ -12,6 +12,7 @@ import { SustainabilityRevenueSection } from '../pages/sections/SustainabilityRe
 import { RevenueSummarySection } from '../pages/sections/RevenueSummarySection';
 import { HrPartnerDetailsSection } from '../pages/sections/HrPartnerDetailsSection';
 import { HrStaffDetailsSection } from '../pages/sections/HrStaffDetailsSection';
+import { HrSummarySection } from '../pages/sections/HrSummarySection';
 
 const REPORT_NAME = 'Austria 2026';
 const REPORT_DUE_DATE = '30 Jun 2025';
@@ -28,6 +29,7 @@ type WorkerFixtures = {
   revenueSummarySection: RevenueSummarySection;
   hrPartnerDetailsSection: HrPartnerDetailsSection;
   hrStaffDetailsSection: HrStaffDetailsSection;
+  hrSummarySection: HrSummarySection;
 };
 
 /**
@@ -138,6 +140,14 @@ export const test = base.extend<{}, WorkerFixtures>({
     async ({ reportDetail }, use) => {
       await reportDetail.hrStaffDetailsSection.expand();
       await use(reportDetail.hrStaffDetailsSection);
+    },
+    { scope: 'worker' },
+  ],
+
+  hrSummarySection: [
+    async ({ reportDetail }, use) => {
+      await reportDetail.hrSummarySection.expand();
+      await use(reportDetail.hrSummarySection);
     },
     { scope: 'worker' },
   ],
