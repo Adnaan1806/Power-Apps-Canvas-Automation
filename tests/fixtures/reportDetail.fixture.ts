@@ -13,6 +13,7 @@ import { RevenueSummarySection } from '../pages/sections/RevenueSummarySection';
 import { HrPartnerDetailsSection } from '../pages/sections/HrPartnerDetailsSection';
 import { HrStaffDetailsSection } from '../pages/sections/HrStaffDetailsSection';
 import { HrSummarySection } from '../pages/sections/HrSummarySection';
+import { OfficesSection } from '../pages/sections/OfficesSection';
 
 const REPORT_NAME = 'Austria 2026';
 const REPORT_DUE_DATE = '30 Jun 2025';
@@ -30,6 +31,7 @@ type WorkerFixtures = {
   hrPartnerDetailsSection: HrPartnerDetailsSection;
   hrStaffDetailsSection: HrStaffDetailsSection;
   hrSummarySection: HrSummarySection;
+  officesSection: OfficesSection;
 };
 
 /**
@@ -148,6 +150,14 @@ export const test = base.extend<{}, WorkerFixtures>({
     async ({ reportDetail }, use) => {
       await reportDetail.hrSummarySection.expand();
       await use(reportDetail.hrSummarySection);
+    },
+    { scope: 'worker' },
+  ],
+
+  officesSection: [
+    async ({ reportDetail }, use) => {
+      await reportDetail.officesSection.expand();
+      await use(reportDetail.officesSection);
     },
     { scope: 'worker' },
   ],

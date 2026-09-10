@@ -180,3 +180,12 @@ export const hrStaffDetailsSectionTestData = {
   explanationMaxLength: 'A'.repeat(250), // 10.16's confirmed character cap, same pattern as 4.13/5.8/8.13/9.13
   explanationOverLimitAttempt: 'A'.repeat(300), // typed, to prove input stops at 250
 };
+
+export const officesSectionTestData = {
+  numberOfOffices: '8',
+  otherComments: 'Two offices relocated to shared co-working spaces this year.',
+  maxLengthValue: '123456789012', // exactly 12 digits - this field's confirmed HTML maxlength
+  overLimitAttempt: '12345678901234567890', // 20 digits typed, to prove input stops at 12
+  explanationMaxLength: 'A'.repeat(250), // 12.2's confirmed character cap, same pattern as 4.13/5.8/8.13/9.13/10.16
+  explanationOverLimitAttempt: 'A'.repeat(300), // typed, to prove input stops at 250
+};

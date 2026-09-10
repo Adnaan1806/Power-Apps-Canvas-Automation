@@ -12,6 +12,7 @@ import { RevenueSummarySection } from './sections/RevenueSummarySection';
 import { HrPartnerDetailsSection } from './sections/HrPartnerDetailsSection';
 import { HrStaffDetailsSection } from './sections/HrStaffDetailsSection';
 import { HrSummarySection } from './sections/HrSummarySection';
+import { OfficesSection } from './sections/OfficesSection';
 
 /**
  * The report form screen (internal Power Apps screen name "StatsV2") reached
@@ -98,6 +99,10 @@ export class ReportDetailPage extends BasePage {
 
   get hrSummarySection(): HrSummarySection {
     return new HrSummarySection(this.page);
+  }
+
+  get officesSection(): OfficesSection {
+    return new OfficesSection(this.page);
   }
 
   async waitForLoad(): Promise<void> {
